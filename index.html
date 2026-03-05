@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Pendaftaran Lomba Matematika - MGMP SMP Cilacap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #f3f4f6; }
+        .header-gradient { background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); }
+        .custom-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); }
+        
+        .form-label {
+            display: block;
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid #fff;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="min-h-screen py-8 px-4">
+
+    <div class="max-w-3xl mx-auto bg-white rounded-2xl overflow-hidden custom-shadow">
+        
+        <!-- Header Banner -->
+        <div class="header-gradient p-8 text-white text-center">
+            <h1 class="text-xl md:text-2xl font-bold uppercase tracking-tight leading-tight">
+                Panitia Lomba Matematika
+            </h1>
+            <h2 class="text-lg md:text-xl font-bold uppercase tracking-wide mt-1">
+                MGMP Matematika SMP Kabupaten Cilacap
+            </h2>
+            <p class="text-yellow-400 font-bold tracking-widest mt-2 uppercase text-sm md:text-base">
+                Tahun 2026
+            </p>
+            <div class="h-1 w-24 bg-white/40 rounded-full mt-4 mx-auto"></div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="p-8 border-b border-gray-100 text-left">
+            <h2 class="text-2xl font-extrabold text-gray-800 mb-4">Formulir Pendaftaran</h2>
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg text-sm text-left">
+                <p class="font-bold text-blue-800 mb-1 text-base">Ketentuan Pendaftaran</p>
+                <ul class="list-disc ml-5 text-gray-700 space-y-2">
+                    <li>Batas akhir pendaftaran: <b>14 April 2026</b>.</li>
+                    <li>Pastikan Anda telah melakukan pembayaran sebelum mengisi formulir ini.</li>
+                    <li>Siapkan <b>Bukti Pembayaran</b> dalam format Gambar (JPG/PNG) atau PDF.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Form -->
+        <form id="registrationForm" class="p-8 space-y-6 text-left">
+            <div class="grid grid-cols-1 gap-6">
+                
+                <!-- 1. Pilih Komda -->
+                <div>
+                    <label for="komda" class="form-label">Pilih Komda *</label>
+                    <div id="dataLoader" class="text-xs text-blue-600 mb-1 hidden italic">Memuat data wilayah...</div>
+                    <select id="komda" name="komda" required 
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all text-gray-700 bg-gray-50">
+                        <option value="">-- Pilih Komda --</option>
+                    </select>
+                </div>
+
+                <!-- 2. Pilih Kecamatan -->
+                <div>
+                    <label for="kecamatan" class="form-label">Pilih Kecamatan *</label>
+                    <select id="kecamatan" name="kecamatan" required disabled
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all text-gray-700 disabled:bg-gray-100 disabled:text-gray-400">
+                        <option value="">-- Pilih Komda Dahulu --</option>
+                    </select>
+                </div>
+
+                <!-- 3. Nama Sekolah -->
+                <div>
+                    <label for="nama_sekolah" class="form-label">Nama Sekolah *</label>
+                    <select id="nama_sekolah" name="nama_sekolah" required disabled
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all text-gray-700 disabled:bg-gray-100 disabled:text-gray-400">
+                        <option value="">-- Pilih Kecamatan Dahulu --</option>
+                    </select>
+                </div>
+
+                <!-- Input Nama Sekolah Manual -->
+                <div id="manualSchoolContainer" class="hidden">
+                    <label for="nama_sekolah_manual" class="form-label text-orange-600">Input Nama Sekolah (Manual) *</label>
+                    <input type="text" id="nama_sekolah_manual" name="nama_sekolah_manual" 
+                        class="w-full px-4 py-3 border border-orange-300 bg-orange-50 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
+                        placeholder="Ketik nama sekolah lengkap">
+                </div>
+
+                <!-- 4. NPSN -->
+                <div>
+                    <label for="npsn" class="form-label">NPSN Sekolah *</label>
+                    <input type="text" id="npsn" name="npsn" required maxlength="8" pattern="\d*"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="8 digit angka NPSN">
+                </div>
+
+                <hr class="border-gray-200">
+
+                <!-- 5. Peserta Lomba 1 -->
+                <div>
+                    <label class="form-label">Peserta Lomba 1 *</label>
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-3">
+                        <div class="md:col-span-3">
+                            <input type="text" name="nama_peserta_1" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                                placeholder="Nama Lengkap">
+                        </div>
+                        <div class="md:col-span-1">
+                            <select name="kelas_peserta_1" required
+                                class="w-full px-2 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white text-center">
+                                <option value="">Kelas</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <input type="text" name="nisn_peserta_1" required 
+                                maxlength="10" minlength="10" pattern="\d{10}"
+                                class="nisn-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                                placeholder="NISN (10 digit)">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Peserta Lomba 2 -->
+                <div>
+                    <label class="form-label">Peserta Lomba 2 *</label>
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-3">
+                        <div class="md:col-span-3">
+                            <input type="text" name="nama_peserta_2" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                                placeholder="Nama Lengkap">
+                        </div>
+                        <div class="md:col-span-1">
+                            <select name="kelas_peserta_2" required
+                                class="w-full px-2 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white text-center">
+                                <option value="">Kelas</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <input type="text" name="nisn_peserta_2" required 
+                                maxlength="10" minlength="10" pattern="\d{10}"
+                                class="nisn-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                                placeholder="NISN (10 digit)">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Peserta Lomba 3 -->
+                <div>
+                    <label class="form-label">Peserta Lomba 3 *</label>
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-3">
+                        <div class="md:col-span-3">
+                            <input type="text" name="nama_peserta_3" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                                placeholder="Nama Lengkap">
+                        </div>
+                        <div class="md:col-span-1">
+                            <select name="kelas_peserta_3" required
+                                class="w-full px-2 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white text-center">
+                                <option value="">Kelas</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <input type="text" name="nisn_peserta_3" required 
+                                maxlength="10" minlength="10" pattern="\d{10}"
+                                class="nisn-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                                placeholder="NISN (10 digit)">
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-gray-200">
+
+                <!-- 8. Penanggung Jawab -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="nama_penanggung_jawab" class="form-label text-sm">Nama Penanggung Jawab *</label>
+                        <input type="text" id="nama_penanggung_jawab" name="nama_penanggung_jawab" required 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                            placeholder="Nama Lengkap">
+                    </div>
+                    <div>
+                        <label for="no_hp_penanggung_jawab" class="form-label text-sm">No. WA Penanggung Jawab *</label>
+                        <input type="tel" id="no_hp_penanggung_jawab" name="no_hp_penanggung_jawab" required 
+                            minlength="10" maxlength="15"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                            placeholder="Contoh: 08123456789">
+                        <div id="hpError" class="hidden text-[10px] text-red-600 mt-1">Nomor tidak valid (10-15 digit).</div>
+                    </div>
+                </div>
+
+                <!-- 9. Upload Bukti Pembayaran -->
+                <div id="uploadContainer" class="p-4 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300">
+                    <label for="bukti_pembayaran" class="form-label">Upload Bukti Pembayaran *</label>
+                    <input type="file" id="bukti_pembayaran" name="bukti_pembayaran" required
+                        accept=".pdf, .jpg, .jpeg, .png"
+                        class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    <p class="text-[10px] text-gray-500 mt-2 italic">Format yang didukung: PDF, JPG, JPEG, atau PNG.</p>
+                    <div id="fileError" class="hidden text-xs text-red-600 mt-1 font-bold">Format file tidak didukung!</div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="submitBtn"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg active:scale-[0.98] flex items-center justify-center text-lg">
+                <span id="btnText">Kirim Pendaftaran</span>
+                <div id="btnLoader" class="hidden spinner ml-3"></div>
+            </button>
+        </form>
+
+        <div id="statusMessage" class="hidden mx-8 mb-8 p-4 rounded-xl text-center font-medium"></div>
+    </div>
+
+    <footer class="text-center mt-8 text-gray-500 text-xs pb-8">
+        &copy; 2026 Panitia Lomba Matematika MGMP SMP Kabupaten Cilacap
+    </footer>
+
+    <script>
+        const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTEo8kS2-2Xk65WnbrDOS4uF14t-I3LZ-wORtz4Y8_9sfmuLQW3OnFBxIPBr3EpdYCPCF1tSoF1QBfc/pub?output=csv";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwhw4IHpqJOlfloRdgZCdxSrbYn413Q_NKWX_aluXUgI0l54PdTpqjP3kXpGkvPMWwsuw/exec"; 
+
+        const form = document.getElementById('registrationForm');
+        const btn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const btnLoader = document.getElementById('btnLoader');
+        const statusMsg = document.getElementById('statusMessage');
+        const komdaSelect = document.getElementById('komda');
+        const kecamatanSelect = document.getElementById('kecamatan');
+        const schoolSelect = document.getElementById('nama_sekolah');
+        const manualSchoolContainer = document.getElementById('manualSchoolContainer');
+        const manualSchoolInput = document.getElementById('nama_sekolah_manual');
+        const dataLoader = document.getElementById('dataLoader');
+        const fileInput = document.getElementById('bukti_pembayaran');
+        const hpInput = document.getElementById('no_hp_penanggung_jawab');
+        const hpError = document.getElementById('hpError');
+        const fileError = document.getElementById('fileError');
+        
+        let allSchoolData = [];
+
+        function parseCSVLine(str) {
+            const arr = [];
+            let quote = false;
+            let col = '';
+            for (let i = 0; i < str.length; i++) {
+                let cc = str[i], nc = str[i+1];
+                if (cc === '"' && quote && nc === '"') { col += cc; ++i; continue; }
+                if (cc === '"') { quote = !quote; continue; }
+                if (cc === ',' && !quote) { arr.push(col); col = ''; continue; }
+                col += cc;
+            }
+            arr.push(col);
+            return arr;
+        }
+
+        async function fetchData() {
+            dataLoader.classList.remove('hidden');
+            try {
+                const response = await fetch(CSV_URL);
+                const data = await response.text();
+                const rows = data.split(/\r?\n/).slice(1); 
+                const komdaSet = new Set();
+                rows.forEach(row => {
+                    const cols = parseCSVLine(row);
+                    if (cols.length >= 5) {
+                        const school = cols[0]?.trim();
+                        const kec = cols[3]?.trim();
+                        const komda = cols[4]?.trim();
+                        if (school && kec && komda) {
+                            allSchoolData.push({ school, kecamatan: kec, komda });
+                            komdaSet.add(komda);
+                        }
+                    }
+                });
+                Array.from(komdaSet).sort().forEach(k => komdaSelect.add(new Option(k, k)));
+            } catch (err) { console.error(err); } 
+            finally { dataLoader.classList.add('hidden'); }
+        }
+
+        fetchData();
+
+        komdaSelect.addEventListener('change', () => {
+            const val = komdaSelect.value;
+            kecamatanSelect.innerHTML = '<option value="">-- Pilih Kecamatan --</option>';
+            kecamatanSelect.disabled = !val;
+            schoolSelect.disabled = true;
+            if (val) {
+                const filtered = [...new Set(allSchoolData.filter(d => d.komda === val).map(d => d.kecamatan))].sort();
+                filtered.forEach(k => kecamatanSelect.add(new Option(k, k)));
+            }
+        });
+
+        kecamatanSelect.addEventListener('change', () => {
+            const val = kecamatanSelect.value;
+            schoolSelect.innerHTML = '<option value="">-- Pilih Sekolah --</option>';
+            schoolSelect.disabled = !val;
+            if (val) {
+                allSchoolData.filter(d => d.kecamatan === val).sort((a,b) => a.school.localeCompare(b.school)).forEach(d => {
+                    schoolSelect.add(new Option(d.school, d.school));
+                });
+                schoolSelect.add(new Option("LAINNYA / TIDAK TERDAFTAR", "Lainnya"));
+            }
+        });
+
+        schoolSelect.addEventListener('change', () => {
+            const isManual = schoolSelect.value === 'Lainnya';
+            manualSchoolContainer.classList.toggle('hidden', !isManual);
+            manualSchoolInput.required = isManual;
+        });
+
+        document.addEventListener('input', (e) => {
+            if (e.target.classList.contains('nisn-input')) {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+            }
+            if (e.target.id === 'no_hp_penanggung_jawab') {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                const invalid = e.target.value.length > 0 && (e.target.value.length < 10 || e.target.value.length > 15);
+                hpError.classList.toggle('hidden', !invalid);
+            }
+        });
+
+        fileInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+                if (!allowedTypes.includes(file.type)) {
+                    fileError.classList.remove('hidden');
+                    this.value = '';
+                } else {
+                    fileError.classList.add('hidden');
+                }
+            }
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const nisnInputs = document.querySelectorAll('.nisn-input');
+            for (let input of nisnInputs) {
+                if (input.value.length !== 10) {
+                    input.focus();
+                    showStatus("⚠️ Mohon pastikan semua NISN berjumlah 10 digit.", "bg-orange-100 text-orange-700");
+                    return;
+                }
+            }
+
+            setLoading(true);
+
+            const finalSchool = schoolSelect.value === 'Lainnya' ? manualSchoolInput.value : schoolSelect.value;
+            const formData = new FormData(form);
+            const dataObj = Object.fromEntries(formData.entries());
+            dataObj.nama_sekolah = finalSchool;
+
+            try {
+                if (fileInput.files[0]) {
+                    dataObj.file_data = await toBase64(fileInput.files[0]);
+                    dataObj.file_name = fileInput.files[0].name;
+                    dataObj.file_mime = fileInput.files[0].type;
+                }
+
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify(dataObj)
+                });
+
+                form.reset();
+                komdaSelect.dispatchEvent(new Event('change'));
+                // MEMPERBAUI PESAN SUKSES SESUAI INSTRUKSI
+                showStatus(`✅ Pendaftaran diterima!<br>Silakan gabung ke <a href="https://chat.whatsapp.com/Ev1nBcljdrSI2FFAn65wqD" class="underline font-bold text-red-600 hover:text-red-700">Grup WhatsApp</a>`, "bg-green-600 text-white");
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            } catch (err) {
+                showStatus("❌ Gagal mengirim data. Silakan coba lagi.", "bg-red-100 text-red-700");
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        function setLoading(isLoading) {
+            btn.disabled = isLoading;
+            btnText.textContent = isLoading ? "Mengunggah..." : "Kirim Pendaftaran";
+            btnLoader.classList.toggle('hidden', !isLoading);
+        }
+
+        function showStatus(msg, classes) {
+            statusMsg.innerHTML = msg;
+            statusMsg.className = `mx-8 mb-8 p-4 rounded-xl text-center font-medium ${classes}`;
+            statusMsg.classList.remove('hidden');
+        }
+
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = error => reject(error);
+        });
+    </script>
+</body>
+</html>
