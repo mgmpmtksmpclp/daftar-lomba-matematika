@@ -44,7 +44,7 @@
             <h2 class="text-lg md:text-xl font-bold uppercase tracking-wide mt-1">
                 MGMP Matematika SMP Kabupaten Cilacap
             </h2>
-            <p class="text-yellow-400 font-bold tracking-widest mt-2 uppercase text-sm md:text-base">
+            <p class="text-yellow-400 font-extrabold tracking-widest mt-2 uppercase text-xl md:text-2xl">
                 Tahun 2026
             </p>
             <div class="h-1 w-24 bg-white/40 rounded-full mt-4 mx-auto"></div>
@@ -56,7 +56,7 @@
             <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg text-sm text-left">
                 <p class="font-bold text-blue-800 mb-1 text-base">Ketentuan Pendaftaran</p>
                 <ul class="list-disc ml-5 text-gray-700 space-y-2">
-                    <li>Batas akhir pendaftaran: <b>14 April 2026</b>.</li>
+                    <li>Batas akhir pendaftaran: <b>13 Mei 2026</b>.</li>
                     <li>Pastikan Anda telah melakukan pembayaran sebelum mengisi formulir ini.</li>
                     <li>Siapkan <b>Bukti Pembayaran</b> dalam format Gambar (JPG/PNG) atau PDF.</li>
                 </ul>
@@ -199,13 +199,13 @@
                 <!-- 8. Penanggung Jawab -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label for="nama_penanggung_jawab" class="form-label text-sm">Nama Penanggung Jawab *</label>
+                        <label for="nama_penanggung_jawab" class="form-label">Nama Penanggung Jawab *</label>
                         <input type="text" id="nama_penanggung_jawab" name="nama_penanggung_jawab" required 
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                             placeholder="Nama Lengkap">
                     </div>
                     <div>
-                        <label for="no_hp_penanggung_jawab" class="form-label text-sm">No. WA Penanggung Jawab *</label>
+                        <label for="no_hp_penanggung_jawab" class="form-label">No. WA Penanggung Jawab *</label>
                         <input type="tel" id="no_hp_penanggung_jawab" name="no_hp_penanggung_jawab" required 
                             minlength="10" maxlength="15"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
@@ -390,8 +390,8 @@
 
                 form.reset();
                 komdaSelect.dispatchEvent(new Event('change'));
-                // MEMPERBAUI PESAN SUKSES SESUAI INSTRUKSI
-                showStatus(`✅ Pendaftaran diterima!<br>Silakan gabung ke <a href="https://chat.whatsapp.com/Ev1nBcljdrSI2FFAn65wqD" class="underline font-bold text-red-600 hover:text-red-700">Grup WhatsApp</a>`, "bg-green-600 text-white");
+                
+                showStatus(`✅ Pendaftaran diterima!<br>Silakan gabung ke <a href="https://chat.whatsapp.com/J04RjarNYZMIvEsbAbjWKr" class="underline font-bold text-red-600 hover:text-red-700">Grup WhatsApp</a>`, "bg-green-600 text-white");
                 window.scrollTo({ top: 0, behavior: 'smooth' });
 
             } catch (err) {
