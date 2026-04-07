@@ -57,8 +57,8 @@
                 <p class="font-bold text-blue-800 mb-1 text-base">Ketentuan Pendaftaran</p>
                 <ul class="list-disc ml-5 text-gray-700 space-y-2">
                     <li>Batas akhir pendaftaran: <b>13 Mei 2026</b>.</li>
-                    <li>Pastikan Anda telah melakukan pembayaran sebelum mengisi formulir ini.</li>
-                    <li>Siapkan <b>Bukti Pembayaran</b> dalam format Gambar (JPG/PNG) atau PDF.</li>
+                    <li>Pastikan data yang diisi sudah benar dan sesuai dengan rapor/identitas resmi.</li>
+                    <li>Setelah mengirim formulir, silakan bergabung ke grup koordinasi.</li>
                 </ul>
             </div>
         </div>
@@ -214,6 +214,8 @@
                     </div>
                 </div>
 
+            </div>
+
             <!-- Submit Button -->
             <button type="submit" id="submitBtn"
                 class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg active:scale-[0.98] flex items-center justify-center text-lg">
@@ -244,10 +246,8 @@
         const manualSchoolContainer = document.getElementById('manualSchoolContainer');
         const manualSchoolInput = document.getElementById('nama_sekolah_manual');
         const dataLoader = document.getElementById('dataLoader');
-        const fileInput = document.getElementById('bukti_pembayaran');
         const hpInput = document.getElementById('no_hp_penanggung_jawab');
         const hpError = document.getElementById('hpError');
-        const fileError = document.getElementById('fileError');
         
         let allSchoolData = [];
 
@@ -332,19 +332,6 @@
             }
         });
 
-        fileInput.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
-                if (!allowedTypes.includes(file.type)) {
-                    fileError.classList.remove('hidden');
-                    this.value = '';
-                } else {
-                    fileError.classList.add('hidden');
-                }
-            }
-        });
-
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -365,12 +352,6 @@
             dataObj.nama_sekolah = finalSchool;
 
             try {
-                if (fileInput.files[0]) {
-                    dataObj.file_data = await toBase64(fileInput.files[0]);
-                    dataObj.file_name = fileInput.files[0].name;
-                    dataObj.file_mime = fileInput.files[0].type;
-                }
-
                 await fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -392,7 +373,7 @@
 
         function setLoading(isLoading) {
             btn.disabled = isLoading;
-            btnText.textContent = isLoading ? "Mengunggah..." : "Kirim Pendaftaran";
+            btnText.textContent = isLoading ? "Mengirim..." : "Kirim Pendaftaran";
             btnLoader.classList.toggle('hidden', !isLoading);
         }
 
@@ -401,13 +382,6 @@
             statusMsg.className = `mx-8 mb-8 p-4 rounded-xl text-center font-medium ${classes}`;
             statusMsg.classList.remove('hidden');
         }
-
-        const toBase64 = file => new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result.split(',')[1]);
-            reader.onerror = error => reject(error);
-        });
     </script>
 </body>
 </html>
